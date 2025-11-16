@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gyümölcs hozzáadása</title>
+</head>
+<body>
+  <h1>Új gyümölcs hozzáadása</h1>
+  <form id="fruitForm">
+    <label>Name: <input type="text" id="name" required></label><br>
+    <label>Color: <input type="text" id="color" required></label><br>
+    <label>Price: <input type="number" id="price" required></label><br>
+    <button type="submit">Hozzáadás</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('fruitForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const color = document.getElementById('color').value;
+      const price = parseFloat(document.getElementById('price').value);
+
+      const res = await fetch('http://localhost:3000/fruits', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, color, price })
+      });
+
+      const data = await res.json();
+      alert('Hozzáadva: ' + JSON.stringify(data));
+    });
+  </script>
+</body>
+</html>
